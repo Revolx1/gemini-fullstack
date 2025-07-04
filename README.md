@@ -1,233 +1,219 @@
-# Gemini Fullstack Agent Development Kit (ADK) Quickstart
+# Gemini Fullstack Research Agent с LangGraph
 
-The **Gemini Fullstack Agent Development Kit (ADK) Quickstart** is a production-ready blueprint for building a sophisticated, fullstack research agent with Gemini. It's built to demonstrate how the ADK helps structure complex agentic workflows, build modular agents, and incorporate critical Human-in-the-Loop (HITL) steps.
+**Gemini Fullstack Research Agent** - это продвинутый исследовательский агент, построенный на LangGraph с фронтендом на React. Проект использует Vertex AI для интеллектуального поиска и анализа информации в интернете.
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="2">Key Features</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>🏗️</td>
-      <td><strong>Fullstack & Production-Ready:</strong> A complete React frontend and ADK-powered FastAPI backend, with deployment options for <a href="https://cloud.google.com/run">Google Cloud Run</a> and <a href="https://cloud.google.com/vertex-ai/generative-ai/docs/agent-engine/overview">Vertex AI Agent Engine</a>.</td>
-    </tr>
-    <tr>
-      <td>🧠</td>
-      <td><strong>Advanced Agentic Workflow:</strong> The agent uses Gemini to <strong>strategize</strong> a multi-step plan, <strong>reflect</strong> on findings to identify gaps, and <strong>synthesize</strong> a final, comprehensive report.</td>
-    </tr>
-    <tr>
-      <td>🔄</td>
-      <td><strong>Iterative & Human-in-the-Loop Research:</strong> Involves the user for plan approval, then autonomously loops through searching (via Gemini function calling) and refining its results until it has gathered sufficient information.</td>
-    </tr>
-  </tbody>
-</table>
+## 🚀 Основные возможности
 
-Here is the agent in action:
+- **🧠 Интеллектуальный поиск**: Использует Gemini для формирования стратегии исследования
+- **🔄 Итеративный процесс**: Автоматически анализирует результаты и формирует новые запросы
+- **🎯 Адаптивная логика**: Останавливается при достижении достаточного количества информации
+- **📊 Веб-интерфейс**: Современный React-интерфейс для взаимодействия с агентом
+- **⚡ LangGraph**: Построен на современном фреймворке для создания агентов
+- **🔒 Vertex AI**: Использует Google Cloud Vertex AI для максимальной производительности
 
-<img src="https://github.com/GoogleCloudPlatform/agent-starter-pack/blob/main/docs/images/adk_gemini_fullstack.gif?raw=true" width="80%" alt="Gemini Fullstack ADK Preview">
+## 🏗️ Архитектура
 
-This project adapts concepts from the [Gemini FullStack LangGraph Quickstart](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart) for the frontend app. 
+Проект состоит из двух основных компонентов:
 
-## 🚀 Getting Started: From Zero to Running Agent in 1 Minute
-**Prerequisites:** **[Python 3.10+](https://www.python.org/downloads/)**, **[Node.js](https://nodejs.org/)**, **[uv](https://github.com/astral-sh/uv)**
+### Frontend (React + TypeScript)
+- Современный интерфейс с компонентами на Tailwind CSS
+- Реальное время взаимодействия с LangGraph API
+- Отображение прогресса исследования и результатов
 
-You have two options to get started. Choose the one that best fits your setup:
+### Backend (LangGraph + Vertex AI)
+- **LangGraph граф** с узлами для различных этапов исследования
+- **Vertex AI интеграция** для обработки естественного языка
+- **Веб-поиск** через Google Search API
+- **Итеративная логика** для глубокого анализа
 
-*   A. **[Google AI Studio](#a-google-ai-studio)**: Choose this path if you want to use a **Google AI Studio API key**. This method involves cloning the sample repository.
-*   B. **[Google Cloud Vertex AI](#b-google-cloud-vertex-ai)**: Choose this path if you want to use an existing **Google Cloud project** for authentication. This method generates a new, prod-ready project using the [agent-starter-pack](https://goo.gle/agent-starter-pack) including all the deployment scripts required.
+## 📋 Предварительные требования
 
----
+- **Python 3.10+**
+- **Node.js 18+**
+- **uv** (для управления зависимостями Python)
+- **Google Cloud Project** с включенным Vertex AI API
+- **Google Cloud SDK** для аутентификации
 
-### A. Google AI Studio
+## 🚀 Быстрый старт
 
-You'll need a **[Google AI Studio API Key](https://aistudio.google.com/app/apikey)**.
-
-#### Step 1: Clone Repository
-Clone the repository and `cd` into the project directory.
-
+### 1. Клонирование репозитория
 ```bash
-git clone https://github.com/google/adk-samples.git
-cd adk-samples/python/agents/gemini-fullstack
+git clone https://github.com/Revolx1/gemini-fullstack.git
+cd gemini-fullstack
 ```
 
-#### Step 2: Set Environment Variables
-Create a `.env` file in the `app` folder by running the following command (replace YOUR_AI_STUDIO_API_KEY with your actual API key):
-
+### 2. Настройка окружения
 ```bash
-echo "GOOGLE_GENAI_USE_VERTEXAI=FALSE" >> app/.env
-echo "GOOGLE_API_KEY=YOUR_AI_STUDIO_API_KEY" >> app/.env
+# Аутентификация с Google Cloud
+gcloud auth application-default login
+gcloud config set project YOUR_PROJECT_ID
 ```
 
-#### Step 3: Install & Run
-From the `gemini-fullstack` directory, install dependencies and start the servers.
-
+### 3. Настройка backend
 ```bash
+cd langgraph_backend
+cp .env.example .env
+# Отредактируйте .env файл с вашими настройками
+```
+
+### 4. Запуск приложения
+```bash
+# Из корневой папки проекта
 make install && make dev
 ```
-Your agent is now running at `http://localhost:5173`.
 
----
+Приложение будет доступно по адресу `http://localhost:5173`
 
-### B. Google Cloud Vertex AI
+## 🔧 Настройка
 
-You'll also need: **[Google Cloud SDK](https://cloud.google.com/sdk/docs/install)** and a **Google Cloud Project** with the **Vertex AI API** enabled.
+### Переменные окружения
 
-#### Step 1: Create Project from Template
-This command uses the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a new directory (`my-fullstack-agent`) with all the necessary code.
-```bash
-# Create and activate a virtual environment
-python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
+Создайте файл `.env` в папке `langgraph_backend`:
 
-# Install the starter pack and create your project
-pip install --upgrade agent-starter-pack
-agent-starter-pack create my-fullstack-agent -a adk_gemini_fullstack
-```
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
+```env
+# Google Cloud настройки
+GOOGLE_CLOUD_PROJECT=your-project-id
+GOOGLE_CLOUD_REGION=us-central1
 
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-```bash
-uvx agent-starter-pack create my-fullstack-agent -a adk_gemini_fullstack
-```
-This command handles creating the project without needing to pre-install the package into a virtual environment.
-</details>
+# Настройки поиска
+GOOGLE_SEARCH_API_KEY=your-search-api-key
+GOOGLE_SEARCH_ENGINE_ID=your-search-engine-id
 
-You'll be prompted to select a deployment option (Agent Engine or Cloud Run) and verify your Google Cloud credentials.
-
-#### Step 2: Install & Run
-Navigate into your **newly created project folder**, then install dependencies and start the servers.
-```bash
-cd my-fullstack-agent && make install && make dev
-```
-Your agent is now running at `http://localhost:5173`.
-
-## ☁️ Cloud Deployment
-> **Note:** The cloud deployment instructions below apply only if you chose the **Google Cloud Vertex AI** option.
-
-You can quickly deploy your agent to a **development environment** on Google Cloud. You can deploy your latest code at any time with:
-
-```bash
-# Replace YOUR_DEV_PROJECT_ID with your actual Google Cloud Project ID
-gcloud config set project YOUR_DEV_PROJECT_ID
-make backend
+# Настройки LangGraph
+LANGGRAPH_API_HOST=0.0.0.0
+LANGGRAPH_API_PORT=8000
 ```
 
-For robust, **production-ready deployments** with automated CI/CD, please follow the detailed instructions in the **[Agent Starter Pack Development Guide](https://googlecloudplatform.github.io/agent-starter-pack/guide/development-guide.html#b-production-ready-deployment-with-ci-cd)**.
-## Agent Details
+### Конфигурация исследования
 
-| Attribute | Description |
-| :--- | :--- |
-| **Interaction Type** | Workflow |
-| **Complexity** | Advanced |
-| **Agent Type** | Multi Agent |
-| **Components** | Multi-agent, Function calling, Web search, React frontend, Human-in-the-Loop |
-| **Vertical** | Horizontal |
+Основные параметры настраиваются в `langgraph_backend/src/agent/configuration.py`:
 
-## How the Agent Thinks: A Two-Phase Workflow
-
-The backend agent, defined in `app/agent.py`, follows a sophisticated workflow to move from a simple topic to a fully-researched report.
-
-The following diagram illustrates the agent's architecture and workflow:
-
-![ADK Gemini Fullstack Architecture](https://github.com/GoogleCloudPlatform/agent-starter-pack/blob/main/docs/images/adk_gemini_fullstack_architecture.png?raw=true)
-
-This process is broken into two main phases:
-
-### Phase 1: Plan & Refine (Human-in-the-Loop)
-
-This is the collaborative brainstorming phase.
-
-1.  **You provide a research topic.**
-2.  The agent generates a high-level research plan with several key goals (e.g., "Analyze the market impact," "Identify key competitors").
-3.  The plan is presented to **you**. You can approve it, or chat with the agent to add, remove, or change goals until you're satisfied. Nothing happens without your explicit approval.
-
-The plan will contains following tags as a signal to downstream agents,
-  - Research Plan Tags
-
-    - [RESEARCH]: Guides info gathering via search.
-    - [DELIVERABLE]: Guides creation of final outputs (e.g., tables, reports).
-  
-  - Plan Refinement Tags
-
-    - [MODIFIED]: Goal was updated.
-    - [NEW]: New goal added per user.
-    - [IMPLIED]: Deliverable proactively added by AI.
-
-### Phase 2: Execute Autonomous Research
-
-Once you approve the plan, the agent's `research_pipeline` takes over and works autonomously.
-
-1.  **Outlining:** It first converts the approved plan into a structured report outline (like a table of contents).
-2.  **Iterative Research & Critique Loop:** For each section of the outline, it repeats a cycle:
-    *   **Search:** It performs web searches to gather information.
-    *   **Critique:** A "critic" model evaluates the findings for gaps or weaknesses.
-    *   **Refine:** If the critique finds weaknesses, the agent generates more specific follow-up questions and searches again. This loop continues until the research meets a high-quality bar.
-3.  **Compose Final Report:** After the research loop is complete, a final agent takes all the verified findings and writes a polished report, automatically adding inline citations that link back to the original sources.
-
-You can edit key parameters (Gemini models, research loop iterations) in the `ResearchConfiguration` dataclass within `app/config.py`.
-
-## Customization
-
-You can modify and extend this agent's behavior by editing the backend code.
-
-*   **Modifying Agent Logic:** The core logic for all sub-agents (planner, researcher, critic, composer) is defined in `app/agent.py`. You can change the prompts, tools, or reasoning steps by modifying the agent definitions here.
-*   **Adjusting Research Parameters:** Key parameters, such as the Gemini models used or the number of research loop iterations, can be adjusted in the `ResearchConfiguration` dataclass within `app/config.py`.
-*   **Syncing with Frontend:** The frontend UI integrates with the backend through specific agent names that process outputs differently (e.g., research findings vs. final report), update the activity timeline with appropriate titles/icons, and track research metrics like website counts. 
-    Important agent names include:
-    * `section_researcher` & `enhanced_search_executor` - track websites consulted
-    * `report_composer_with_citations` - processes final report
-    * `interactive_planner_agent` - updates AI messages during planning
-    * `plan_generator` and `section_planner` - used for timeline labels
+```python
+class Configuration(BaseModel):
+    """Конфигурация для исследовательского агента."""
     
-    If you rename agents in `app/agent.py`, you must update their names in the frontend code (`/ui`) to maintain functionality.
+    # Количество начальных поисковых запросов
+    number_of_initial_queries: int = Field(default=30)
+    
+    # Максимальное количество циклов исследования
+    max_research_loops: int = Field(default=50)
+    
+    # Модель для различных задач
+    model: str = Field(default="gemini-1.5-pro")
+    search_model: str = Field(default="gemini-1.5-flash")
+```
 
+## 📊 Как работает агент
 
-### Example Interaction
+### Граф исследования
 
-> **User:** A report on the last Google I/O
->
-> **Agent:** Here's a research plan for a report on the last Google I/O:
->
-> *   Analyze the key announcements and product updates made at Google I/O 2025.
-> *   Identify the central themes and strategic directions emphasized by Google during the event, particularly concerning AI, Android, and other emerging technologies like Android XR.
-> *   Investigate the reception and industry impact of the major product unveilings and feature enhancements.
-> *   Examine any significant shifts or continuities in Google's developer strategy as presented at the conference.
-> *   Assess the implications of the announced technologies and initiatives for developers, consumers, and the broader tech landscape.
->
-> Does this plan look good, or would you like to refine it further? Once approved, I can initiate the research.
->
-> **User:** Looks good!
-> *(The agent proceeds to autonomously execute the research, showing its progress on the timeline.)*
->
-> **Agent:**
-> 
-> Google I/O 2025: Key Announcements and Highlights
-> ....
+```mermaid
+graph TD
+    A[Пользователь вводит запрос] --> B[generate_query]
+    B --> C[web_research]
+    C --> D[reflection]
+    D --> E[evaluate_research]
+    E --> F{Достаточно информации?}
+    F -->|Да| G[finalize_answer]
+    F -->|Нет| H[Генерация новых запросов]
+    H --> C
+    G --> I[Итоговый отчет]
+```
 
-## Troubleshooting
+### Основные узлы графа
 
-If you encounter issues while setting up or running this agent, here are some resources to help you troubleshoot:
-- [ADK Documentation](https://google.github.io/adk-docs/): Comprehensive documentation for the Agent Development Kit
-- [Vertex AI Authentication Guide](https://cloud.google.com/vertex-ai/docs/authentication): Detailed instructions for setting up authentication
-- [Agent Starter Pack Troubleshooting](https://googlecloudplatform.github.io/agent-starter-pack/guide/troubleshooting.html): Common issues
+1. **generate_query**: Генерирует начальные поисковые запросы
+2. **web_research**: Выполняет поиск в интернете
+3. **reflection**: Анализирует найденную информацию
+4. **evaluate_research**: Принимает решение о продолжении исследования
+5. **finalize_answer**: Формирует итоговый отчет
 
+## 🎯 Использование
 
-## 🛠️ Technologies Used
+### Через веб-интерфейс
+1. Откройте `http://localhost:5173`
+2. Введите ваш исследовательский запрос
+3. Наблюдайте за процессом исследования в реальном времени
+4. Получите детальный отчет с источниками
 
-### Backend
-*   [**Agent Development Kit (ADK)**](https://github.com/google/adk-python): The core framework for building the stateful, multi-turn agent.
-*   [**FastAPI**](https://fastapi.tiangolo.com/): High-performance web framework for the backend API.
-*   [**Google Gemini**](https://cloud.google.com/vertex-ai/generative-ai/docs): Used for planning, reasoning, search query generation, and final synthesis.
+### Через CLI
+```bash
+cd langgraph_backend/examples
+python cli_research.py "Ваш исследовательский запрос" --initial-queries 30 --max-loops 50
+```
 
-### Frontend
-*   [**React**](https://reactjs.org/) (with [Vite](https://vitejs.dev/)): For building the interactive user interface.
-*   [**Tailwind CSS**](https://tailwindcss.com/): For utility-first styling.
-*   [**Shadcn UI**](https://ui.shadcn.com/): A set of beautifully designed, accessible components.
+## 🔍 Troubleshooting
 
-## Disclaimer
+### Проблема с recursion_limit
+Если процесс останавливается с ошибкой `GraphRecursionError`, увеличьте лимит рекурсии:
 
-This agent sample is provided for illustrative purposes only. It serves as a basic example of an agent and a foundational starting point for individuals or teams to develop their own agents.
+```python
+# В client коде
+config = {
+    "configurable": {"server_log_path": "logs/"},
+    "recursion_limit": 150  # Увеличьте для больших исследований
+}
+```
 
-Users are solely responsible for any further development, testing, security hardening, and deployment of agents based on this sample. We recommend thorough review, testing, and the implementation of appropriate safeguards before using any derived agent in a live or critical system.
+### Проблемы с аутентификацией
+Убедитесь, что:
+- Выполнена команда `gcloud auth application-default login`
+- Установлен правильный PROJECT_ID
+- Включен Vertex AI API в вашем проекте
+
+## 🛠️ Разработка
+
+### Структура проекта
+```
+gemini-fullstack/
+├── frontend/                 # React приложение
+│   ├── src/
+│   │   ├── components/      # UI компоненты
+│   │   └── App.tsx         # Главный компонент
+├── langgraph_backend/       # LangGraph сервер
+│   ├── src/agent/          # Логика агента
+│   │   ├── graph.py        # Определение графа
+│   │   ├── prompts.py      # Промпты для моделей
+│   │   └── configuration.py # Настройки
+│   └── examples/           # Примеры использования
+└── app/                    # Простой Flask API (опционально)
+```
+
+### Добавление новых узлов в граф
+
+```python
+# В graph.py
+def your_custom_node(state: ResearchState, config: RunnableConfig) -> ResearchState:
+    """Ваш кастомный узел."""
+    # Логика узла
+    return state
+
+# Добавление в граф
+builder.add_node("your_node", your_custom_node)
+builder.add_edge("previous_node", "your_node")
+```
+
+## 📈 Мониторинг
+
+Логи исследования сохраняются в папке `outputs/` с временными метками. Каждый запуск создает:
+- `research_YYYYMMDD.txt` - основной лог
+- `research_YYYYMMDD.client.tmp` - детальные логи клиента
+
+## 🤝 Вклад в проект
+
+1. Форкните репозиторий
+2. Создайте feature branch (`git checkout -b feature/amazing-feature`)
+3. Закоммитьте изменения (`git commit -m 'Add amazing feature'`)
+4. Запушьте в branch (`git push origin feature/amazing-feature`)
+5. Создайте Pull Request
+
+## 📄 Лицензия
+
+Этот проект распространяется под лицензией MIT. См. файл `LICENSE` для подробностей.
+
+## 🔗 Полезные ссылки
+
+- [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
+- [Vertex AI](https://cloud.google.com/vertex-ai)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
