@@ -1,0 +1,15 @@
+--- a/src/agent/graph.py
++++ b/src/agent/graph.py
+@@ -296,10 +296,11 @@ async def finalize_answer(state: OverallState, config: RunnableConfig):
+         max_retries=2,
+     )
+     
+-    # Format the prompt - it now receives text with temporary markers
++    # Format the prompt with all required parameters
+     formatted_prompt = answer_instructions.format(
+         research_topic=question,
+         summaries="\n\n---\n\n".join(state["web_research_result"]),
++        current_date=get_current_date()
+     )
+ 
+     result = await llm.ainvoke(formatted_prompt)
